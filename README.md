@@ -1,4 +1,4 @@
-# PyPhysics
+# MRPyPhysics
 
 “Um tempo se acaba; novos tempos se anunciam. A hora em que estamos é uma hora de transição e de parto doloroso. As formas esgotadas do passado empalidecem-se e se desfazem para dar lugar a outras, a princípio vagas e confusas, mas que se precisam cada vez mais. Nelas se esboça o pensamento crescente da Humanidade. O espírito humano está em trabalho, por toda parte, sob a aparente decomposição das ideias e dos princípios; por toda parte, na Ciência, na Arte, na Filosofia e até no seio das religiões, o observador atento pode verificar que uma lenta e laboriosa gestação se produz.
 É tempo de o compreender: a Civilização não se pode engrandecer, a Sociedade não pode subir, se um pensamento cada vez mais elevado, se uma luz mais viva, não vierem inspirar, esclarecer os espíritos e tocar os corações, renovando-os. Somente a ideia é mãe da ação.
