@@ -1,6 +1,5 @@
 class Unit():
-    def __init__(self, value: float | int, unit: str):
-        self.conversion_factors = {
+    conversion_factors = {
             # Distance (conversion to meters)
             "mm": 1e-3,
             "cm": 1e-2,
@@ -59,9 +58,9 @@ class Unit():
             "st": 6.35029,  # Stone
             "st": 907.184,  # Short tons (ambiguous, considere diferenciá-los)
             "lt": 1016.05,  # Long tons
-        }
-
-        if unit not in self.conversion_factors:
+    }
+    def __init__(self, value: float | int, unit: str):
+        if unit not in Unit.conversion_factors:
             raise ValueError(f"Invalid unit: {unit}")
         self.value = value 
         self.unit = unit
@@ -83,13 +82,17 @@ class Unit():
         Raises:
             ValueError: Se a unidade não for reconhecida.
         """
-        if self.unit not in self.conversion_factors:
+        if self.unit not in Unit.conversion_factors:
             raise ValueError(f"Unidade '{self.unit}' não é válida ou suportada.")
         
         # Realiza a conversão
-        return self.value * self.conversion_factors[self.unit]
+        return self.value * Unit.conversion_factors[self.unit]
 
     def to_unit (self, to_unit):
         value_si = self.to_si()
-        value = value_si / self.conversion_factors[to_unit]
+        value = value_si /Unit.conversion_factors[to_unit]
         return value
+    
+    @classmethod
+    def valid_units(cls):
+        return tuple(Unit.conversion_factors.keys())
