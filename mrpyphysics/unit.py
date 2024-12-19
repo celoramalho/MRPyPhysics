@@ -1,44 +1,29 @@
-class Unit:
-    def __init__(self):
-        pass
+class Unit():
+    units = (
+    # Distance
+    "meters", "kilometers", "centimeters", "millimeters", "inches", "feet", "yards", "miles", "nautical miles",
 
-    #length
-    def milimeters(self, value):
-        return value / 1000
-    def centimeters(self, value):
-        return value / 100
-    def decimeters(self, value):
-        return value / 10
-    def meters(self, value):
-        return value
-    def decameters(self, value):
-        return value * 10
-    def hectometers(self, value):
-        return value * 100
-    def kilometers(self, value):
-        return value * 1000
+    # Time
+    "seconds", "milliseconds", "microseconds", "nanoseconds", "minutes", "hours", "days", "weeks", "months", "years",
+
+    # Area
+    "square meters", "square kilometers", "square centimeters", "square millimeters", 
+    "hectares", "acres", "square inches", "square feet", "square yards", "square miles",
+
+    # Speed
+    "meters per second", "kilometers per hour", "miles per hour", 
+    "feet per second", "knots",
+
+    # Acceleration
+    "meters per second squared", "feet per second squared", "g-force",
+
+    # Mass
+    "grams", "kilograms", "milligrams", "micrograms", "tonnes", 
+    "pounds", "ounces", "stone", "short tons", "long tons"
+)
+    def __init__(self, value, unit):
+        self.value = value 
+        self.unit = unit
     
-    #time
-    def seconds(self, value):
-        return value
-    def minutes(self, value):
-        return value * 60
-    def hours(self, value):
-        return value * 3600
-    def days(self, value):
-        return value * 86400
-    def months(self, value):
-        return value * 2592000
-    def years(self, value):
-        return value * 31536000
-    def decades(self, value):
-        return value * 3155673600
-    def centuries(self, value):
-        return value * 31556736000
-    
-    #mass
-    def grams(self, value):
-        return value / 1000
-    def kilograms(self, value):
-        return value
-    
+    def __str__(self):
+        return f"{self.value} {self.unit}"
