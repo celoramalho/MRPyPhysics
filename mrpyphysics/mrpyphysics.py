@@ -1,4 +1,4 @@
-from .isu import Unit
+from .unit import Unit
 from .kinematics import Kinematics
 #from .dynamics import Dynamics
 #from .thermodynamics import Thermodynamics
