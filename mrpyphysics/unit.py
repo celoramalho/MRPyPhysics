@@ -54,7 +54,7 @@ class Unit():
             "kg": 1,
             "t": 1e3,
             "lb": 0.453592,
-            "oz": 0.0283495,
+            "oz": 0.0283495, #Usar sobrecarga de operadores será?
             "st": 6.35029,  # Stone
             "st": 907.184,  # Short tons (ambiguous, considere diferenciá-los)
             "lt": 1016.05,  # Long tons
