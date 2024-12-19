@@ -1,4 +1,5 @@
-class Kinematics:
+from siconverter import SIConverter
+class Kinematics(SIConverter):
 
     #========================Average-Velocity-Formula========================
     #Galileu Galilei (1564-1642)
