@@ -11,6 +11,7 @@ class Unit():
             "mi": 1609.34,
             "nmi": 1852,
 
+
             # Time (conversion to seconds)
             "ms": 1e-3,
             "µs": 1e-6,
@@ -90,8 +91,8 @@ class Unit():
 
     def to_unit (self, to_unit):
         value_si = self.to_si()
-        value = value_si /Unit.conversion_factors[to_unit]
-        return value
+        value = value_si / Unit.conversion_factors[to_unit]
+        return value #Retornar float ou um objeto de classe Unit?
     
     @classmethod
     def valid_units(cls):
