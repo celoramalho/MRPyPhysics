@@ -48,7 +48,7 @@ class Unit:
     def __str__(self):
         return f"{self.value} {self.unit}"
 
-    def to_si(self, return_as_object=True) -> float:
+    def to_si(self, return_as_object=True):
         """
         Convert the value to its equivalent in the SI unit.
         """
@@ -79,3 +79,12 @@ class Unit:
         Return all valid units available for conversion.
         """
         return tuple(cls.conversion_factors.keys())
+    
+    @classmethod
+    def validate_and_convert_to_si(cls, *args):
+        si_values = []
+        for arg in args:
+            if not isinstance(arg, Unit):
+                raise TypeError(f"Expected Unit object, got {type(arg).__name__}")
+            si_values.append(arg.to_si(return_as_object=False))
+        return si_values

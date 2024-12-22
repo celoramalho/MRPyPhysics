@@ -1,19 +1,21 @@
-class Kinematics():
+from .unit import Unit
 
+class Kinematics():
 
     #========================Average-Speed-Formula========================
     #Velocidade Escalar Média
     class AverageSpeed():
-        def calculate(self, distance: float, time_interval: float) -> float:
-            if time_interval == 0:
+
+        def calculate(distance : Unit, time: Unit) -> Unit:
+            distance, time = Unit.validate_and_convert_to_si(distance, time)
+            if time == 0:
                 raise ValueError("Time cannot be zero.")
-            return distance / time_interval
-            #velocidade = constante, não sofre variação
+            return Unit(distance / time, 'm/s') #velocidade = distance / time
         
-        def distance(self, average_speed: float, time_interval: float) -> float:
-            return average_speed * time_interval
+        def distance(self, average_speed: float, time: float) -> float:
+            return average_speed * time
         
-        def time_interval(self, distance: float, average_speed: float) -> float:
+        def time(self, distance: float, average_speed: float) -> float:
             if average_speed == 0:
                 raise ValueError("Speed cannot be zero.")
             return distance / average_speed
@@ -25,17 +27,17 @@ class Kinematics():
     #Isaac Newton (1643-1727)
     class AverageVelocity():
         @staticmethod
-        def calculate(displacement: float, time_interval: float) -> float:
-            if time_interval == 0:
+        def calculate(displacement: float, time: float) -> float:
+            if time == 0:
                 raise ValueError("Time cannot be zero.")
-            return displacement / time_interval
+            return displacement / time
 
         @staticmethod
-        def displacement(average_velocity: float, time_interval: float) -> float:
-            return average_velocity * time_interval
+        def displacement(average_velocity: float, time: float) -> float:
+            return average_velocity * time
 
         @staticmethod
-        def time_interval(displacement: float, average_velocity: float) -> float:
+        def time(displacement: float, average_velocity: float) -> float:
             if average_velocity == 0:
                 raise ValueError("Velocity cannot be zero.")
             return displacement / average_velocity
@@ -48,25 +50,25 @@ class Kinematics():
         #The acceleration (a) is zero because the velocity does not change.
         #The displacement is directly proportional to the time (t).
         @staticmethod
-        def displacement(velocity: float, time_interval: float) -> float:
-            if time_interval == 0:
+        def displacement(velocity: float, time: float) -> float:
+            if time == 0:
                 raise ValueError("Time cannot be zero.")
-            return velocity * time_interval
+            return velocity * time
         
         @staticmethod
-        def velocity(displacement: float, time_interval: float) -> float:
-            if time_interval == 0:
+        def velocity(displacement: float, time: float) -> float:
+            if time == 0:
                 raise ValueError("Time cannot be zero.")
-            return displacement / time_interval
+            return displacement / time
         
-        def time_interval(displacement: float, velocity: float) -> float:
+        def time(displacement: float, velocity: float) -> float:
             if velocity == 0:
                 raise ValueError("Velocity cannot be zero.")
             return displacement / velocity
         
-        def position(initial_position: float, velocity: float, time_interval: float) -> float:
+        def position(initial_position: float, velocity: float, time: float) -> float:
         #Fórmula do Sorvete
         #PositionTimeEquation
-            if time_interval < 0:
+            if time < 0:
                 raise ValueError("Time cannot be negative.")
             return initial_position + velocity * time
