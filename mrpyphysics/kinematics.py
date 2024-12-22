@@ -7,13 +7,16 @@ class Kinematics():
     class AverageSpeed():
 
         def calculate(distance : Unit, time: Unit) -> Unit:
+            distance_unit, time_unit = distance.unit, time.unit
             distance, time = Unit.validate_and_convert_to_si(distance, time)
             if time == 0:
                 raise ValueError("Time cannot be zero.")
             return Unit(distance / time, 'm/s') #velocidade = distance / time
         
-        def distance(self, average_speed: float, time: float) -> float:
-            return average_speed * time
+        def distance(average_speed: Unit, time: Unit) -> Unit:
+            average_speed_unit, time_unit = average_speed.unit, time.unit
+            average_speed, time = Unit.validate_and_convert_to_si(average_speed, time)
+            return Unit(average_speed * time, 'm')
         
         def time(self, distance: float, average_speed: float) -> float:
             if average_speed == 0:
