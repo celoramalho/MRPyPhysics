@@ -18,10 +18,11 @@ class Kinematics():
             average_speed, time = Unit.validate_and_convert_to_si(average_speed, time)
             return Unit(average_speed * time, 'm')
         
-        def time(self, distance: float, average_speed: float) -> float:
+        def time(distance: Unit, average_speed: Unit) -> Unit:
+            distance, average_speed = Unit.validate_and_convert_to_si(distance, average_speed)
             if average_speed == 0:
                 raise ValueError("Speed cannot be zero.")
-            return distance / average_speed
+            return Unit(distance / average_speed, 's')
 
     #=======================================================================
     #========================Average-Velocity-Formula========================
