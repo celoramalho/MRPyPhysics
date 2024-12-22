@@ -67,6 +67,6 @@ class Kinematics():
         def position(initial_position: float, velocity: float, time_interval: float) -> float:
         #Fórmula do Sorvete
         #PositionTimeEquation
-        if time < 0:
-            raise ValueError("Time cannot be negative.")
-        return initial_position + velocity * time
+            if time_interval < 0:
+                raise ValueError("Time cannot be negative.")
+            return initial_position + velocity * time
