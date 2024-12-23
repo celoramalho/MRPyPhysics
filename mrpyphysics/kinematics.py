@@ -87,39 +87,90 @@ class Kinematics():
             return Unit(initial_position + velocity * time_interval, 'm')
     
     #========================Uniform-Accelerated-Motion========================
-    class UAM():
-        #Galileu Galilei (1564-1642)
-        #Isaac Newton (1643-1727)
+    class UAM:
+        """
+        Uniformly Accelerated Motion (UAM) class.
+        """
+
+        @staticmethod
         def average_acceleration(velocity: Unit, time_interval: Unit) -> Unit:
-            #Average Acceleration Formula
+            """
+            Calculate average acceleration.
+            """
             velocity, time_interval = Unit.validate_and_convert_to_si(velocity, time_interval)
             if time_interval == 0:
                 raise ValueError("Time cannot be zero.")
             return Unit(velocity / time_interval, 'm/s^2')
 
+        @staticmethod
         def final_velocity(initial_velocity: Unit, acceleration: Unit, time_interval: Unit) -> Unit:
-            #Velocity-Time Equation
+            """
+            Calculate final velocity using the velocity-time equation.
+            """
             acceleration, time_interval = Unit.validate_and_convert_to_si(acceleration, time_interval)
-            if time_interval == 0:
-                raise ValueError("Time cannot be zero.")
             return Unit(initial_velocity + acceleration * time_interval, 'm/s')
-        
+
+        @staticmethod
         def time_interval(initial_velocity: Unit, final_velocity: Unit, acceleration: Unit) -> Unit:
-            initial_velocity, final_velocity, acceleration = Unit.validate_and_convert_to_si(initial_velocity, final_velocity, acceleration)
+            """
+            Calculate time interval.
+            """
+            initial_velocity, final_velocity, acceleration = Unit.validate_and_convert_to_si(
+                initial_velocity, final_velocity, acceleration
+            )
             if acceleration == 0:
                 raise ValueError("Acceleration cannot be zero.")
             return Unit((final_velocity - initial_velocity) / acceleration, 's')
+
+        @staticmethod
         def final_velocity_torricelli(initial_velocity: Unit, displacement: Unit, acceleration: Unit) -> Unit:
-            initial_velocity, displacement, acceleration = Unit.validate_and_convert_to_si(initial_velocity, displacement, acceleration)
+            """
+            Calculate final velocity using Torricelli's equation.
+            """
+            initial_velocity, displacement, acceleration = Unit.validate_and_convert_to_si(
+                initial_velocity, displacement, acceleration
+            )
             return Unit((initial_velocity**2 + 2 * acceleration * displacement)**0.5, 'm/s')
-        
+
+        @staticmethod
         def aceleration_torricelli(initial_velocity: Unit, final_velocity: Unit, displacement: Unit) -> Unit:
-            initial_velocity, final_velocity, displacement = Unit.validate_and_convert_to_si(initial_velocity, final_velocity, displacement)
+            """
+            Calculate acceleration using Torricelli's equation.
+            """
+            initial_velocity, final_velocity, displacement = Unit.validate_and_convert_to_si(
+                initial_velocity, final_velocity, displacement
+            )
             return Unit((final_velocity**2 - initial_velocity**2) / (2 * displacement), 'm/s^2')
+
+        @staticmethod
         def position(initial_position: Unit, initial_velocity: Unit, time_interval: Unit, acceleration: Unit) -> Unit:
-            #Velocity-Displacement Equation
-            #Evangelista Torricelli (1608–1647)
-            initial_position, initial_velocity, time_interval, acceleration = Unit.validate_and_convert_to_si(initial_position, initial_velocity, time_interval, acceleration)
-            if time_interval < 0:
-                raise ValueError("Time cannot be negative.")
-            return Unit(initial_position + initial_velocity * time_interval + 0.5 * acceleration * time_interval**2, 'm')
+            initial_position, initial_velocity, time_interval, acceleration = Unit.validate_and_convert_to_si(
+                initial_position, initial_velocity, time_interval, acceleration
+            )
+            return Unit(
+                initial_position + initial_velocity * time_interval + 0.5 * acceleration * time_interval**2, 'm'
+            )
+
+        @staticmethod
+        def initial_position(final_position: Unit, initial_velocity: Unit, time_interval: Unit, acceleration: Unit) -> Unit:
+            final_position, initial_velocity, time_interval, acceleration = Unit.validate_and_convert_to_si(
+                final_position, initial_velocity, time_interval, acceleration
+            )
+            return Unit(
+                final_position - initial_velocity * time_interval - 0.5 * acceleration * time_interval**2, 'm'
+            )
+
+        @staticmethod
+        def time_to_free_fall(initial_position: Unit, acceleration: Unit) -> Unit:
+            initial_position, acceleration = Unit.validate_and_convert_to_si(initial_position, acceleration)
+            return Unit((2 * initial_position / acceleration)**0.5, 's')
+
+        @staticmethod
+        def time_to_reach_maximum_height(initial_velocity: Unit, acceleration: Unit) -> Unit:
+            initial_velocity, acceleration = Unit.validate_and_convert_to_si(initial_velocity, acceleration)
+            return Unit(initial_velocity / abs(acceleration), 's')
+
+        @classmethod
+        def maximum_height(cls, initial_position: Unit, initial_velocity: Unit, acceleration: Unit) -> Unit:
+            time_to_max_height = cls.time_to_reach_maximum_height(initial_velocity, acceleration)
+            return cls.position(initial_position, initial_velocity, time_to_max_height, acceleration)
