@@ -20,8 +20,8 @@ class Unit:
         "h": 3600, "hours": 3600,
         "d": 86400, "days": 86400,
         "wk": 604800, "weeks": 604800,
-        "mo": 2592000, "months": 2592000,  # Approximation: 30 days
-        "yr": 31536000, "years": 31536000,  # Approximation: 365 days
+        "mo": 2592000, "months": 2592000,
+        "yr": 31536000, "years": 31536000,
 
         # Speed (conversion to meters per second)
         "m/s": 1, "meters_per_second": 1,
@@ -39,11 +39,38 @@ class Unit:
         "oz": 0.0283495, "ounces": 0.0283495,
     }
 
+    categories = {
+        "length": ["mm", "millimeters", "cm", "centimeters", "m", "meters", "km", "kilometers", "in", "inches", "ft", "feet", "yd", "yards", "mi", "miles", "nmi", "nautical_miles"],
+        "time": ["ms", "milliseconds", "µs", "microseconds", "ns", "nanoseconds", "s", "seconds", "min", "minutes", "h", "hours", "d", "days", "wk", "weeks", "mo", "months", "yr", "years"],
+        "speed": ["m/s", "meters_per_second", "km/h", "kilometers_per_hour", "mph", "miles_per_hour", "ft/s", "feet_per_second", "kn", "knots"],
+        "mass": ["µg", "micrograms", "mg", "milligrams", "g", "grams", "kg", "kilograms", "lb", "pounds", "oz", "ounces"],
+    }
+
     def __init__(self, value: float | int, unit: str):
         if unit not in Unit.conversion_factors:
             raise ValueError(f"Invalid unit: {unit}")
         self.value = value
         self.unit = unit
+        self.category = self.get_unit_category(unit)
+
+    @classmethod
+    def get_unit_category(cls, unit: str) -> str:
+        """
+        Determine the category of the unit (length, time, etc.).
+
+        Args:
+            unit (str): The unit to check.
+
+        Returns:
+            str: The category of the unit.
+
+        Raises:
+            ValueError: If the unit is invalid or does not belong to any category.
+        """
+        for category, units in cls.categories.items():
+            if unit in units:
+                return category
+        raise ValueError(f"Invalid unit: {unit}")
 
     def __str__(self):
         return f"{self.value} {self.unit}"
@@ -51,37 +78,57 @@ class Unit:
     def to_si(self, return_as_object=True):
         """
         Convert the value to its equivalent in the SI unit.
-        """
-        value_si = self.value * Unit.conversion_factors[self.unit]
-        return Unit(value_si, "SI") if return_as_object else value_si
-
-    def to_unit(self, to_unit: str, return_as_object=True):
-        """
-        Convert the current unit to another unit.
 
         Args:
-            to_unit (str): The target unit to convert to.
-            return_as_object (bool): Whether to return a Unit object or just the value.
+            return_as_object (bool): Whether to return a Unit object or a float.
+
+        Returns:
+            Unit or float: The converted value in SI units.
+        """
+        value_si = self.value * Unit.conversion_factors[self.unit]
+        si_unit = {
+            "length": "m",
+            "time": "s",
+            "speed": "m/s",
+            "mass": "kg",
+        }.get(self.category, "SI")
+        return Unit(value_si, si_unit) if return_as_object else value_si
+
+    def to_unit(self, unit_to_convert: str, return_as_object=True):
+        """
+        Convert the value to another unit.
+
+        Args:
+            unit_to_convert (str): The target unit.
+            return_as_object (bool): Whether to return a Unit object or a float.
 
         Returns:
             Unit or float: The converted value.
         """
-        if to_unit not in Unit.conversion_factors:
-            raise ValueError(f"Invalid target unit: {to_unit}")
-        
-        value_si = self.to_si()
-        converted_value = value_si / Unit.conversion_factors[to_unit]
-        return Unit(converted_value, to_unit) if return_as_object else converted_value
+        if unit_to_convert not in Unit.conversion_factors:
+            raise ValueError(f"Invalid target unit: {unit_to_convert}")
+        value_si = self.to_si(return_as_object=False)
+        converted_value = value_si / Unit.conversion_factors[unit_to_convert]
+        return Unit(converted_value, unit_to_convert) if return_as_object else converted_value
 
     @classmethod
     def valid_units(cls):
         """
         Return all valid units available for conversion.
         """
-        return tuple(cls.conversion_factors.keys())
-    
+        return tuple(Unit.conversion_factors.keys())
+
     @classmethod
     def validate_and_convert_to_si(cls, *args):
+        """
+        Validate that all arguments are Unit objects and convert them to SI.
+
+        Args:
+            *args: List of Unit objects.
+
+        Returns:
+            List[float]: Values converted to SI.
+        """
         si_values = []
         for arg in args:
             if not isinstance(arg, Unit):
