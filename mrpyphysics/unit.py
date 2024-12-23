@@ -31,9 +31,9 @@ class Unit:
         "kn": 0.514444, "knots": 0.514444,
 
         # Acceleration (conversion to meters per second squared)
-        "m/s**2": 1, "meters_per_second_squared": 1,
-        "km/h**2": (1 / 3.6) ** 2, "kilometers_per_hour_squared": (1 / 3.6) ** 2,
-        "ft/s**2": 0.3048, "feet_per_second_squared": 0.3048,
+        "m/s^2": 1, "meters_per_second_squared": 1,
+        "km/h^2": (1 / 3.6) ** 2, "kilometers_per_hour_squared": (1 / 3.6) ** 2,
+        "ft/s^2": 0.3048, "feet_per_second_squared": 0.3048,
         "g": 9.80665, "standard_gravity": 9.80665,  # Gravitational acceleration
         "Gal": 0.01, "galileo": 0.01,  # Used in geophysics
 
@@ -51,7 +51,7 @@ class Unit:
         "time": ["ms", "milliseconds", "µs", "microseconds", "ns", "nanoseconds", "s", "seconds", "min", "minutes", "h", "hours", "d", "days", "wk", "weeks", "mo", "months", "yr", "years"],
         "speed": ["m/s", "meters_per_second", "km/h", "kilometers_per_hour", "mph", "miles_per_hour", "ft/s", "feet_per_second", "kn", "knots"],
         "mass": ["µg", "micrograms", "mg", "milligrams", "g", "grams", "kg", "kilograms", "lb", "pounds", "oz", "ounces"],
-        "acceleration": ["m/s**2", "meters_per_second_squared", "km/h**2", "kilometers_per_hour_squared", "ft/s**2", "feet_per_second_squared", "g", "standard_gravity", "Gal", "galileo"],
+        "acceleration": ["m/s^2", "meters_per_second_squared", "km/h^2", "kilometers_per_hour_squared", "ft/s^2", "feet_per_second_squared", "g", "standard_gravity", "Gal", "galileo"],
     }
 
     def __init__(self, value: float | int, unit: str):

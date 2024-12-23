@@ -109,7 +109,13 @@ class Kinematics():
             if acceleration == 0:
                 raise ValueError("Acceleration cannot be zero.")
             return Unit((final_velocity - initial_velocity) / acceleration, 's')
+        def final_velocity_torricelli(initial_velocity: Unit, displacement: Unit, acceleration: Unit) -> Unit:
+            initial_velocity, displacement, acceleration = Unit.validate_and_convert_to_si(initial_velocity, displacement, acceleration)
+            return Unit((initial_velocity**2 + 2 * acceleration * displacement)**0.5, 'm/s')
         
+        def aceleration_torricelli(initial_velocity: Unit, final_velocity: Unit, displacement: Unit) -> Unit:
+            initial_velocity, final_velocity, displacement = Unit.validate_and_convert_to_si(initial_velocity, final_velocity, displacement)
+            return Unit((final_velocity**2 - initial_velocity**2) / (2 * displacement), 'm/s^2')
         def position(initial_position: Unit, initial_velocity: Unit, time_interval: Unit, acceleration: Unit) -> Unit:
             #Velocity-Displacement Equation
             #Evangelista Torricelli (1608–1647)
