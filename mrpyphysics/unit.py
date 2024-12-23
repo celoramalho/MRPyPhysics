@@ -87,7 +87,7 @@ class Unit:
         """
         value_si = self.value * Unit.conversion_factors[self.unit]
         si_unit = {
-            "length": "m",
+            "length": "m", 
             "time": "s",
             "speed": "m/s",
             "mass": "kg",
@@ -95,16 +95,6 @@ class Unit:
         return Unit(value_si, si_unit) if return_as_object else value_si
 
     def to_unit(self, unit_to_convert: str, return_as_object=True):
-        """
-        Convert the value to another unit.
-
-        Args:
-            unit_to_convert (str): The target unit.
-            return_as_object (bool): Whether to return a Unit object or a float.
-
-        Returns:
-            Unit or float: The converted value.
-        """
         if unit_to_convert not in Unit.conversion_factors:
             raise ValueError(f"Invalid target unit: {unit_to_convert}")
         value_si = self.to_si(return_as_object=False)
@@ -120,15 +110,6 @@ class Unit:
 
     @classmethod
     def validate_and_convert_to_si(cls, *args):
-        """
-        Validate that all arguments are Unit objects and convert them to SI.
-
-        Args:
-            *args: List of Unit objects.
-
-        Returns:
-            List[float]: Values converted to SI.
-        """
         si_values = []
         for arg in args:
             if not isinstance(arg, Unit):
