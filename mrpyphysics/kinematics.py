@@ -87,3 +87,27 @@ class Kinematics():
             return Unit(initial_position + velocity * time_interval, 'm')
     
     #========================Uniform-Accelerated-Motion========================
+    class UAM():
+        def average_acceleration(velocity: Unit, time_interval: Unit) -> Unit:
+            velocity, time_interval = Unit.validate_and_convert_to_si(velocity, time_interval)
+            if time_interval == 0:
+                raise ValueError("Time cannot be zero.")
+            return Unit(velocity / time_interval, 'm/s^2')
+
+        def final_velocity(initial_velocity: Unit, acceleration: Unit, time_interval: Unit) -> Unit:
+            acceleration, time_interval = Unit.validate_and_convert_to_si(acceleration, time_interval)
+            if time_interval == 0:
+                raise ValueError("Time cannot be zero.")
+            return Unit(initial_velocity + acceleration * time_interval, 'm/s')
+        
+        def time_interval(initial_velocity: Unit, final_velocity: Unit, acceleration: Unit) -> Unit:
+            initial_velocity, final_velocity, acceleration = Unit.validate_and_convert_to_si(initial_velocity, final_velocity, acceleration)
+            if acceleration == 0:
+                raise ValueError("Acceleration cannot be zero.")
+            return Unit((final_velocity - initial_velocity) / acceleration, 's')
+        
+        def position(initial_position: Unit, initial_velocity: Unit, time_interval: Unit, acceleration: Unit) -> Unit:
+            initial_position, initial_velocity, time_interval, acceleration = Unit.validate_and_convert_to_si(initial_position, initial_velocity, time_interval, acceleration)
+            if time_interval < 0:
+                raise ValueError("Time cannot be negative.")
+            return Unit(initial_position + initial_velocity * time_interval + 0.5 * acceleration * time_interval**2, 'm')
