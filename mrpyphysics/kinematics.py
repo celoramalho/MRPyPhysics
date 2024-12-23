@@ -88,13 +88,17 @@ class Kinematics():
     
     #========================Uniform-Accelerated-Motion========================
     class UAM():
+        #Galileu Galilei (1564-1642)
+        #Isaac Newton (1643-1727)
         def average_acceleration(velocity: Unit, time_interval: Unit) -> Unit:
+            #Average Acceleration Formula
             velocity, time_interval = Unit.validate_and_convert_to_si(velocity, time_interval)
             if time_interval == 0:
                 raise ValueError("Time cannot be zero.")
             return Unit(velocity / time_interval, 'm/s^2')
 
         def final_velocity(initial_velocity: Unit, acceleration: Unit, time_interval: Unit) -> Unit:
+            #Velocity-Time Equation
             acceleration, time_interval = Unit.validate_and_convert_to_si(acceleration, time_interval)
             if time_interval == 0:
                 raise ValueError("Time cannot be zero.")
@@ -107,6 +111,8 @@ class Kinematics():
             return Unit((final_velocity - initial_velocity) / acceleration, 's')
         
         def position(initial_position: Unit, initial_velocity: Unit, time_interval: Unit, acceleration: Unit) -> Unit:
+            #Velocity-Displacement Equation
+            #Evangelista Torricelli (1608–1647)
             initial_position, initial_velocity, time_interval, acceleration = Unit.validate_and_convert_to_si(initial_position, initial_velocity, time_interval, acceleration)
             if time_interval < 0:
                 raise ValueError("Time cannot be negative.")
